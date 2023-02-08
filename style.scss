@@ -387,9 +387,9 @@ img {
 }
 
 .site-description {
-  margin: 15px auto;
+  margin: 5px auto;
   color: $base-lighten-color;
-  font-size: 12px;
+  font-size: 16px;
 
   @include mobile {
     margin: 10px auto;
@@ -402,7 +402,7 @@ img {
 
 nav {
   display: block;
-  margin-top: 23px; // @TODO: Vertically middle align
+  margin-top: 15px; // @TODO: Vertically middle align
   font-family: $base-font;
   font-weight: 500;
   font-size: 15px;
