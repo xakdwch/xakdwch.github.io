@@ -1,6 +1,11 @@
-| layout | title              | date       | tags | comments | author  |
-| ------ | ------------------ | ---------- |------| -------- | ------- |
-| post   | etcd自动备份与恢复 | 2022-03-24 | etcd | true     | xakdwch |
+---
+layout: post
+title: "etcd自动备份与恢复"
+date:   2019-11-22
+tags: [etcd]
+comments: true
+author: xakdwch
+---
 
 # 摘要
 
