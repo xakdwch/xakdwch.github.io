@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "etcd自动备份与恢复"
-date:   2019-11-22
+date:   2022-03-24
 tags: [etcd]
 comments: true
 author: xakdwch
