@@ -361,8 +361,8 @@ img {
   .site-avatar {
     margin:0 auto;
     display: block;
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 150px;
+    max-height: 150px;
 
     @include mobile {
       max-width: 120px;
@@ -382,14 +382,14 @@ img {
   cursor: pointer;
   font-family: $base-font;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 25px;
   letter-spacing: 1px;
 }
 
 .site-description {
   margin: 15px auto;
   color: $base-lighten-color;
-  font-size: 16px;
+  font-size: 12px;
 
   @include mobile {
     margin: 10px auto;
@@ -405,7 +405,7 @@ nav {
   margin-top: 23px; // @TODO: Vertically middle align
   font-family: $base-font;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 15px;
 
   @include mobile {
     margin-top: 9px;
