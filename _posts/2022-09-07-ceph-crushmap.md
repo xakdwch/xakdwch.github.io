@@ -1,12 +1,3 @@
----
-layout: post
-title: "Ceph CRUSH Map简介"
-date:   2022-09-07
-tags: [ceph]
-comments: true
-author: xakdwch
----
-
 # **Overview**
 
 CRUSH是ceph的核心设计之一，CRUSH算法通过简单计算就能确定数据的存储位置。因此ceph客户端无需经过传统查表的方式来获取数据的索引，进而根据索引来读写数据，只需通过crush算法计算后直接和对应的OSD交互进行数据读写。这样，ceph就避免了查表这种传统中心化架构存在的单点故障、性能瓶颈以及不易扩展的缺陷。
@@ -23,7 +14,7 @@ CRUSH map是ceph集群物理拓扑的抽象，CRUSH算法通过CRUSH map中的ce
 
 现有ceph集群的树状层级结构如下：
 
-![img](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/osd_tree.jpg)
+![blogPage](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/osd_tree.jpg)
 
 这是一个3节点，6 osd的ceph集群，集群为3副本模式，故障域为host。树状结构的根节点为root，叶子节点为osd，中间节点为host。
 
@@ -130,11 +121,11 @@ rule replicated_rule {
 
 CRUSH map主要有以下几部分组成：
 
-1. tunables：tunables参数主要用来修正一些旧bug、优化算法、以及向后兼容老版本
-2. devices：代表各个存储数据的osd，是CRUSH树状结构的叶子节点
-3. types：bucket的类型，可以自定义，编号为正整数
-4. buckets：CRUSH树状结构的所有中间节点就叫bucket，bucket可以是一些device的集合，也可以是诸如（host、rack、room等）的集合，根节点root是整个集群的入口
-5. rules：定义了数据在集群中的分布策略，crush算法的每一步都按照规则来执行
+1. **tunables：**tunables参数主要用来修正一些旧bug、优化算法、以及向后兼容老版本
+2. **devices：**代表各个存储数据的osd，是CRUSH树状结构的叶子节点
+3. **types：**bucket的类型，可以自定义，编号为正整数
+4. **buckets：**CRUSH树状结构的所有中间节点就叫bucket，bucket可以是一些device的集合，也可以是诸如（host、rack、room等）的集合，根节点root是整个集群的入口
+5. **rules：**定义了数据在集群中的分布策略，crush算法的每一步都按照规则来执行
 
 ### **tunables参数**
 
@@ -237,7 +228,7 @@ type 11 root
 
 CRUSH算法会根据定义的CRUSH map将数据及副本分布到集群中，除了叶子节点必须代表osd外，其它层级的bucket用户可以根据自己的实际情况任意定义。
 
-推荐用户在CRUSH map中的命名，可以反映出自己实际的拓扑结构、硬件名称等信息，越详细越接近实际就越好。好的命名可以使你更容易对集群进行运维管理，当集群osd出现硬件故障时，可以更快更准确的定位到osd对应的磁盘位置。
+推荐用户在CRUSH map中的命名，可以反映出自己实际的拓扑结构、硬件名称等信息，越详细越接近实际就越好。好的命名可以使你更容易对集群进行[运维](https://cloud.tencent.com/solution/operation?from=10680)管理，当集群osd出现硬件故障时，可以更快更准确的定位到osd对应的磁盘位置。
 
 当定义一个bucket时，需要遵循以下语法规范：
 
@@ -328,11 +319,11 @@ rule <rulename> {
 
 `step [choose|chooseleaf] [firstn|indep] <N> type <bucket-type>`这条规则详细介绍如下：
 
-choose：选择到预期数量和类型的bucket即可结束
+**choose：**选择到预期数量和类型的bucket即可结束
 
-chooseleaf：选择到预期数量和类型的bucket，并最终从这些bucket中选出叶子节点（即osd）
+**chooseleaf：**选择到预期数量和类型的bucket，并最终从这些bucket中选出叶子节点（即osd）
 
-firstn和indep：当出现osd down掉的情况时，用于控制CRUSH的副本策略。副本池应该选择firstn，纠删码池应该选择indep，纠删码要求选择结果是有序的。
+**firstn和indep：**当出现osd down掉的情况时，用于控制CRUSH的副本策略。副本池应该选择firstn，纠删码池应该选择indep，纠删码要求选择结果是有序的。
 
 假如，一个PG的5个副本分布在OSD 1，2，3，4，5上，然后3 down了。
 
@@ -340,7 +331,7 @@ firstn和indep：当出现osd down掉的情况时，用于控制CRUSH的副本�
 
 在indep模式下，CRUSH算法会选择1，2，在选择3时发现其down掉了，会再尝试选择一个新的未down掉的OSD 6，然后接着选择4，5，也就是最终的结果变迁为：1，2，3，4，5 -> 1，2，6，4，5。
 
-N：如果N==0，选择的数量等于副本数；如果0<N<副本数，选择的数量等于N；如果N<0，选择的数量等于（副本数-N）。
+**N：**如果N==0，选择的数量等于副本数；如果0<N<副本数，选择的数量等于N；如果N<0，选择的数量等于（副本数-N）。
 
 我们ceph环境的rule信息如下：
 
@@ -395,7 +386,7 @@ ceph osd setcrushmap -i {compiled-crushmap-filename}
 
 ### **CRUSH map结构**
 
-![img](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/crush1.jpg)
+![blogPage](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/crush1.jpg)
 
 ### **编写CRUSH map**
 
@@ -555,7 +546,7 @@ ceph osd pool create <pool> [<pg_num:int>] [<pgp_num:int>] [replicated|erasure] 
 
 ### **CRUSH map结构**
 
-![img](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/crush2.jpg)
+![blogPage](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/crush2.jpg)
 
 ### **编写CRUSH map**
 
