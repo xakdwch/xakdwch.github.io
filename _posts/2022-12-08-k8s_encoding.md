@@ -1,3 +1,12 @@
+---
+layout: post
+title: "k8s Secret 资源编解码"
+date:   2022-12-09
+tags: [k8s]
+comments: true
+author: xakdwch
+---
+
 # **Overview**
 
 k8s是通过kube-apiserver组件将数据存储在etcd中，这些数据通常会通过protobuf或者json序列化后进行存储，而有的资源则需要进行加密存储，比如Secret。本文就以Secret资源为例，手把手教你如何解密K8s集群的加密资源。

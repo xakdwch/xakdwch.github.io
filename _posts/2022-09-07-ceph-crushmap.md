@@ -1,3 +1,12 @@
+---
+layout: post
+title: "Ceph CRUSH Map简介"
+date:   2022-09-07
+tags: [k8s]
+comments: true
+author: xakdwch
+---
+
 # **Overview**
 
 CRUSH是ceph的核心设计之一，CRUSH算法通过简单计算就能确定数据的存储位置。因此ceph客户端无需经过传统查表的方式来获取数据的索引，进而根据索引来读写数据，只需通过crush算法计算后直接和对应的OSD交互进行数据读写。这样，ceph就避免了查表这种传统中心化架构存在的单点故障、性能瓶颈以及不易扩展的缺陷。
@@ -14,7 +23,7 @@ CRUSH map是ceph集群物理拓扑的抽象，CRUSH算法通过CRUSH map中的ce
 
 现有ceph集群的树状层级结构如下：
 
-![blogPage](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/osd_tree.jpg)
+![img](../images/osd_tree.jpg)
 
 这是一个3节点，6 osd的ceph集群，集群为3副本模式，故障域为host。树状结构的根节点为root，叶子节点为osd，中间节点为host。
 
@@ -386,7 +395,7 @@ ceph osd setcrushmap -i {compiled-crushmap-filename}
 
 ### **CRUSH map结构**
 
-![blogPage](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/crush1.jpg)
+![img](../images/crush1.jpg)
 
 ### **编写CRUSH map**
 
@@ -546,7 +555,7 @@ ceph osd pool create <pool> [<pg_num:int>] [<pgp_num:int>] [replicated|erasure] 
 
 ### **CRUSH map结构**
 
-![blogPage](https://github.com/xakdwch/xakdwch.github.io/blob/master/images/crush2.jpg)
+![img](../images/crush2.jpg)
 
 ### **编写CRUSH map**
 
